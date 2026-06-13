@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đi chơi với tui nhé babi? 🌹</title>
+    <!-- thư viện pháo bông xịn -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #fce4ec 0%, #f06292 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 85%;
+            z-index: 10;
+        }
+        h1 { color: #880e4f; font-size: 22px; margin-bottom: 20px; line-height: 1.4; }
+        .img-container {
+            width: 100%;
+            min-height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        img { max-width: 100%; border-radius: 15px; }
+        .btn-group { 
+            position: relative; 
+            height: 50px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        #yesBtn { background-color: #ff4081; color: white; margin-right: 10px; z-index: 2; }
+        #noBtn { background-color: #bdbdbd; color: white; position: absolute; z-index: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Đi chơi với tui nhé babi? 🌹</h1>
+        <div class="img-container">
+            <!-- gọi ảnh số 1 từ kho của em -->
+            <img id="catImg" src="./anh-1.gif" alt="Cute Cat">
+        </div>
+        <div class="btn-group">
+            <button id="yesBtn">Okii luôn</button>
+            <button id="noBtn">Hong bé ơi</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const title = document.getElementById('title');
+        const catImg = document.getElementById('catImg');
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            title.innerHTML = "Yeaaaa! Biết ngay mà! Love uuu ❤️";
+            // đổi sang ảnh số 2 khi đồng ý
+            catImg.src = "./anh-2.gif";
+            noBtn.style.display = 'none';
+
+            // hiệu ứng pháo bông rực rỡ
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff4081', '#ffffff'] });
+              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff4081', '#ffffff'] });
+              if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        });
+    </script>
+</body>
+</html>
